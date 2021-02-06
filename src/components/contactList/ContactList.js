@@ -1,14 +1,19 @@
 import React, { useEffect } from "react";
-import { connect, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
-import PropTypes from "prop-types";
 import ContactListItem from "./ContactListItem";
-
-import ContactsWrapper from "./ContactsStyled";
 import { getContactsOperation } from "../../redux/operations/contacts-operations";
+import ContactsWrapper from "./ContactsStyled";
 
-const ContactList = ({ contacts, filter, getContacts }) => {
+const ContactList = () => {
   const dispatch = useDispatch();
+  const contacts = useSelector((state) =>
+    state.contacts.filter((item) =>
+      item.name.toLowerCase().includes(state.filter.toLowerCase())
+    )
+  );
+  const filter = useSelector((state) => state.filter);
+
   useEffect(() => {
     dispatch(getContactsOperation());
     // eslint-disable-next-line
@@ -35,18 +40,4 @@ const ContactList = ({ contacts, filter, getContacts }) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    contacts: state.contacts.filter((item) =>
-      item.name.toLowerCase().includes(state.filter.toLowerCase())
-    ),
-    filter: state.filter,
-  };
-};
-
-export default connect(mapStateToProps)(ContactList);
-
-ContactList.propTypes = {
-  contacts: PropTypes.arrayOf(PropTypes.object),
-  filter: PropTypes.string,
-};
+export default ContactList;

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { connect, useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { CSSTransition } from "react-transition-group";
-import PropTypes from "prop-types";
 import Message from "../message/Message";
 import FormContact from "./ContactFormStyled";
 import { addContactOperation } from "../../redux/operations/contacts-operations";
@@ -11,9 +10,10 @@ const initialState = {
   number: "",
 };
 
-const ContactForm = ({ contacts }) => {
+const ContactForm = () => {
   const dispatch = useDispatch();
-  const isLoading = useSelector((state) => state.isLoading);
+  const contacts = useSelector((state) => state.contacts);
+
   const [state, setState] = useState({ ...initialState });
   const [message, setMessage] = useState("");
   const [showMessage, setShowMessage] = useState(false);
@@ -64,7 +64,6 @@ const ContactForm = ({ contacts }) => {
 
   return (
     <FormContact>
-      {isLoading && <h2>...loading</h2>}
       <CSSTransition
         in={showMessage}
         timeout={250}
@@ -102,15 +101,4 @@ const ContactForm = ({ contacts }) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    contacts: state.contacts,
-  };
-};
-
-export default connect(mapStateToProps)(ContactForm);
-
-ContactForm.propTypes = {
-  contacts: PropTypes.arrayOf(PropTypes.object),
-  addContact: PropTypes.func,
-};
+export default ContactForm;

@@ -1,21 +1,23 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import { CSSTransition } from "react-transition-group";
-import PropTypes from "prop-types";
 import ContactForm from "./contactForm/ContactForm";
-import AppWrapper from "./AppStyled";
 import ContactList from "./contactList/ContactList";
 import Filter from "./filter/Filter";
+import LoaderSpinner from "./loader/Loader";
+import AppWrapper from "./AppStyled";
 
-const App = ({ contacts }) => {
+const App = () => {
+  const contacts = useSelector((state) => state.contacts);
+  const isLoading = useSelector((state) => state.isLoading);
+
   return (
     <AppWrapper>
+      {isLoading && <LoaderSpinner />}
       <CSSTransition in={true} timeout={500} appear={true} classNames="logo">
         <h2 className="phonebook-title">PhoneBook</h2>
       </CSSTransition>
-
       <ContactForm />
-
       <h2 className="phonebook-title-second">Contacts</h2>
       <CSSTransition
         in={contacts.length > 1}
@@ -26,20 +28,9 @@ const App = ({ contacts }) => {
       >
         <Filter />
       </CSSTransition>
-
       <ContactList />
     </AppWrapper>
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    contacts: state.contacts,
-  };
-};
-
-export default connect(mapStateToProps)(App);
-
-App.propTypes = {
-  contacts: PropTypes.arrayOf(PropTypes.object),
-};
+export default App;

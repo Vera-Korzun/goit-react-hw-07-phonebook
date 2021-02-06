@@ -1,29 +1,31 @@
 import axios from "axios";
 import {
-  addNewContact,
-  getContacts,
-  deleteContact,
-  setError,
-  setLoading,
+  addNewContactRequest,
+  addNewContactSuccess,
+  addNewContactError,
+  getContactsRequest,
+  getContactsSuccess,
+  getContactsError,
+  deleteContactRequest,
+  deleteContactSuccess,
+  deleteContactError,
 } from "../actions/formActions";
 
 const addContactOperation = (contact) => async (dispatch) => {
-  dispatch(setLoading());
+  dispatch(addNewContactRequest());
   try {
     const response = await axios.post(
       `${process.env.REACT_APP_BASE_URL}/contacts.json`,
       contact
     );
-    dispatch(addNewContact({ ...contact, id: response.data.name }));
+    dispatch(addNewContactSuccess({ ...contact, id: response.data.name }));
   } catch (error) {
-    dispatch(setError(error));
-  } finally {
-    dispatch(setLoading());
+    dispatch(addNewContactError(error));
   }
 };
 
 const getContactsOperation = () => async (dispatch) => {
-  dispatch(setLoading());
+  dispatch(getContactsRequest());
   try {
     const response = await axios.get(
       `${process.env.REACT_APP_BASE_URL}/contacts.json`
@@ -32,24 +34,20 @@ const getContactsOperation = () => async (dispatch) => {
       ...response.data[key],
       id: key,
     }));
-    dispatch(getContacts(contacts));
+    dispatch(getContactsSuccess(contacts));
   } catch (error) {
-    dispatch(setError(error));
-  } finally {
-    dispatch(setLoading());
+    dispatch(getContactsError(error));
   }
 };
 
 const deleteContactOperation = (id) => (dispatch) => {
-  dispatch(setLoading());
+  dispatch(deleteContactRequest());
   try {
     axios
       .delete(`${process.env.REACT_APP_BASE_URL}/contacts/${id}.json`)
-      .then(() => dispatch(deleteContact(id)));
+      .then(() => dispatch(deleteContactSuccess(id)));
   } catch (error) {
-    dispatch(setError(error));
-  } finally {
-    dispatch(setLoading());
+    dispatch(deleteContactError(error));
   }
 };
 export { addContactOperation, getContactsOperation, deleteContactOperation };
