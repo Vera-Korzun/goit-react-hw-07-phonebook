@@ -27,6 +27,12 @@ const Wrapper = styled.div`
     padding: 10px 15px;
     margin-top: 5px;
   }
+  .contact-form__imput:focus,
+  .contact-form__imput:hover {
+    outline: inherit;
+    border: 1px solid #cd5c5c;
+    transition: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
   .contact-form__btn {
     display: inline-block;
     font-weight: 500;

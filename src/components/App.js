@@ -15,6 +15,7 @@ const App = () => {
   return (
     <AppWrapper>
       {isLoading && <LoaderSpinner />}
+      {/* <LoaderSpinner /> */}
       <CSSTransition in={true} timeout={500} appear={true} classNames="logo">
         <h2 className="phonebook-title">PhoneBook</h2>
       </CSSTransition>

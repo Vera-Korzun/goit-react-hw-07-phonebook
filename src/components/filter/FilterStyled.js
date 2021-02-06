@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const Wrapper = styled.div`
-  position: relative;
+  //position: relative;
   .filter-form {
     display: flex;
 
@@ -28,6 +28,13 @@ const Wrapper = styled.div`
     border-radius: 4px;
     padding: 5px 15px;
     margin-top: 5px;
+  }
+
+  .filter-form__imput:focus,
+  .filter-form__imput:hover {
+    outline: inherit;
+    border: 1px solid #cd5c5c;
+    transition: 500ms cubic-bezier(0.4, 0, 0.2, 1);
   }
 `;
 
