@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CSSTransition } from "react-transition-group";
 import Message from "../message/Message";
-import FormContact from "./ContactFormStyled";
 import { addContactOperation } from "../../redux/operations/contacts-operations";
+import { getContacts } from "../../redux/selectors/formSelectors";
+import FormContact from "./ContactFormStyled";
 
 const initialState = {
   name: "",
@@ -12,7 +13,7 @@ const initialState = {
 
 const ContactForm = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector((state) => state.contacts);
+  const contacts = useSelector(getContacts);
 
   const [state, setState] = useState({ ...initialState });
   const [message, setMessage] = useState("");

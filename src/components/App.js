@@ -6,10 +6,11 @@ import ContactList from "./contactList/ContactList";
 import Filter from "./filter/Filter";
 import LoaderSpinner from "./loader/Loader";
 import AppWrapper from "./AppStyled";
+import { getContacts, loading } from "../redux/selectors/formSelectors";
 
 const App = () => {
-  const contacts = useSelector((state) => state.contacts);
-  const isLoading = useSelector((state) => state.isLoading);
+  const contacts = useSelector(getContacts);
+  const isLoading = useSelector(loading);
 
   return (
     <AppWrapper>

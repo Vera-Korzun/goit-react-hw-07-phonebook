@@ -3,15 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import { deleteContactOperation } from "../../redux/operations/contacts-operations";
 import { setFilter } from "../../redux/actions/formActions";
+import {
+  getFilter,
+  getFilteredContacts,
+} from "../../redux/selectors/formSelectors";
 
 const ContactListItem = ({ contact }) => {
   const dispatch = useDispatch();
-  const contacts = useSelector((state) =>
-    state.contacts.filter((item) =>
-      item.name.toLowerCase().includes(state.filter.toLowerCase())
-    )
-  );
-  const filter = useSelector((state) => state.filter);
+  const contacts = useSelector(getFilteredContacts);
+  const filter = useSelector(getFilter);
 
   const onHandleDelete = (e) => {
     const { id } = e.target;

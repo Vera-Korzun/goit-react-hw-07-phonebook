@@ -3,16 +3,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import ContactListItem from "./ContactListItem";
 import { getContactsOperation } from "../../redux/operations/contacts-operations";
+import {
+  getFilter,
+  getFilteredContacts,
+} from "../../redux/selectors/formSelectors";
 import ContactsWrapper from "./ContactsStyled";
 
 const ContactList = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector((state) =>
-    state.contacts.filter((item) =>
-      item.name.toLowerCase().includes(state.filter.toLowerCase())
-    )
-  );
-  const filter = useSelector((state) => state.filter);
+  const contacts = useSelector(getFilteredContacts);
+  const filter = useSelector(getFilter);
 
   useEffect(() => {
     dispatch(getContactsOperation());

@@ -1,11 +1,12 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setFilter } from "../../redux/actions/formActions";
-import FornFilter from "./FilterStyled";
+import { getFilter } from "../../redux/selectors/formSelectors";
+import FormFilter from "./FilterStyled";
 
 const Filter = () => {
   const dispatch = useDispatch();
-  const filter = useSelector((state) => state.filter);
+  const filter = useSelector(getFilter);
 
   const onChangeFilter = (e) => {
     const { value } = e.target;
@@ -13,7 +14,7 @@ const Filter = () => {
   };
 
   return (
-    <FornFilter>
+    <FormFilter>
       <form className="filter-form">
         <label className="filter-form__title">
           Find contact by name
@@ -26,7 +27,7 @@ const Filter = () => {
           />
         </label>
       </form>
-    </FornFilter>
+    </FormFilter>
   );
 };
 
